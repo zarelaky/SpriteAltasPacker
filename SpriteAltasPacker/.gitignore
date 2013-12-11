@@ -1,0 +1,12 @@
+
+ui_*
+release
+debug
+
+SpriteAltasPacker.sln 
+SpriteAltasPacker.v12.suo 
+SpriteAltasPacker.vcxproj* 
+
+Makefile 
+Makefile.Debug 
+Makefile.Release 
