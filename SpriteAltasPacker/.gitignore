@@ -1,12 +1,12 @@
-
 ui_*
 release
 debug
+Makefile 
+Makefile.Debug 
+Makefile.Release 
 
 SpriteAltasPacker.sln 
 SpriteAltasPacker.v12.suo 
 SpriteAltasPacker.vcxproj* 
 
-Makefile 
-Makefile.Debug 
-Makefile.Release 
+
