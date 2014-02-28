@@ -39,16 +39,7 @@
     <property name="sizeConstraint">
      <enum>QLayout::SetMaximumSize</enum>
     </property>
-    <property name="leftMargin">
-     <number>1</number>
-    </property>
-    <property name="topMargin">
-     <number>1</number>
-    </property>
-    <property name="rightMargin">
-     <number>1</number>
-    </property>
-    <property name="bottomMargin">
+    <property name="margin">
      <number>1</number>
     </property>
     <item>
@@ -103,6 +94,8 @@
     </property>
     <addaction name="actionFileView"/>
     <addaction name="actionPropertiesView"/>
+    <addaction name="actionImagePreview"/>
+    <addaction name="actionLogView"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menu_View"/>
@@ -127,6 +120,16 @@
   <action name="actionPropertiesView">
    <property name="text">
     <string>&amp;PropertiesView</string>
+   </property>
+  </action>
+  <action name="actionImagePreview">
+   <property name="text">
+    <string>ImagePreview</string>
+   </property>
+  </action>
+  <action name="actionLogView">
+   <property name="text">
+    <string>LogView</string>
    </property>
   </action>
  </widget>

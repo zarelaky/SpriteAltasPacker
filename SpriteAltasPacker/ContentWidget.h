@@ -17,5 +17,6 @@ protected:
 	void rerender();
 private:
 	QImage _canvas;	
+    QBrush* _bkgndBrush;
 
 };

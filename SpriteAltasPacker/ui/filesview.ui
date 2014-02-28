@@ -6,14 +6,14 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>525</width>
+    <width>300</width>
     <height>567</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>525</width>
-    <height>300</height>
+    <width>300</width>
+    <height>200</height>
    </size>
   </property>
   <property name="allowedAreas">
@@ -33,16 +33,7 @@
     <property name="spacing">
      <number>0</number>
     </property>
-    <property name="leftMargin">
-     <number>0</number>
-    </property>
-    <property name="topMargin">
-     <number>0</number>
-    </property>
-    <property name="rightMargin">
-     <number>0</number>
-    </property>
-    <property name="bottomMargin">
+    <property name="margin">
      <number>0</number>
     </property>
     <item>
@@ -71,16 +62,7 @@
          <property name="spacing">
           <number>0</number>
          </property>
-         <property name="leftMargin">
-          <number>0</number>
-         </property>
-         <property name="topMargin">
-          <number>0</number>
-         </property>
-         <property name="rightMargin">
-          <number>0</number>
-         </property>
-         <property name="bottomMargin">
+         <property name="margin">
           <number>0</number>
          </property>
          <item>
@@ -102,9 +84,12 @@
             </spacer>
            </item>
            <item>
-            <widget class="QPushButton" name="pushButton_3">
+            <widget class="QPushButton" name="btnAddFile">
              <property name="text">
               <string>Add File</string>
+             </property>
+             <property name="flat">
+              <bool>false</bool>
              </property>
             </widget>
            </item>
@@ -122,9 +107,12 @@
             </spacer>
            </item>
            <item>
-            <widget class="QPushButton" name="pushButton_2">
+            <widget class="QPushButton" name="btnAddFolder">
              <property name="text">
-              <string>add Folder</string>
+              <string>Add Folder</string>
+             </property>
+             <property name="flat">
+              <bool>false</bool>
              </property>
             </widget>
            </item>
@@ -142,9 +130,12 @@
             </spacer>
            </item>
            <item>
-            <widget class="QPushButton" name="pushButton">
+            <widget class="QPushButton" name="btnDelete">
              <property name="text">
               <string>Delete</string>
+             </property>
+             <property name="flat">
+              <bool>false</bool>
              </property>
             </widget>
            </item>
@@ -187,17 +178,25 @@
          <bool>false</bool>
         </property>
         <property name="columnCount">
-         <number>1</number>
+         <number>2</number>
         </property>
         <attribute name="headerVisible">
-         <bool>false</bool>
+         <bool>true</bool>
         </attribute>
         <attribute name="headerDefaultSectionSize">
          <number>40</number>
         </attribute>
+        <attribute name="headerMinimumSectionSize">
+         <number>60</number>
+        </attribute>
         <column>
          <property name="text">
-          <string notr="true">1</string>
+          <string notr="true">File</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Path</string>
          </property>
         </column>
        </widget>
@@ -208,5 +207,59 @@
   </widget>
  </widget>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>btnAddFile</sender>
+   <signal>clicked()</signal>
+   <receiver>FilesDockWidget</receiver>
+   <slot>onAddFile()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>74</x>
+     <y>53</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>312</x>
+     <y>205</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btnAddFolder</sender>
+   <signal>clicked()</signal>
+   <receiver>FilesDockWidget</receiver>
+   <slot>onAddFolder()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>146</x>
+     <y>53</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>303</x>
+     <y>133</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btnDelete</sender>
+   <signal>clicked()</signal>
+   <receiver>FilesDockWidget</receiver>
+   <slot>onDeleteFile()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>266</x>
+     <y>56</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>313</x>
+     <y>91</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>onAddFile()</slot>
+  <slot>onAddFolder()</slot>
+  <slot>onDeleteFile()</slot>
+ </slots>
 </ui>

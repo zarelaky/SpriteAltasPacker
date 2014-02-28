@@ -13,11 +13,11 @@ int main(int argc, char* argv[])
     splash.show();
     splash.showMessage("Loaded Resource ..");
     Q_INIT_RESOURCE(SpriteAltasPacker);
-    QThread::sleep(1);
+
     a.processEvents();
 
     splash.showMessage("Start Window ..");
-    QThread::sleep(1);
+
     MainWindow w;
     w.show();
 
