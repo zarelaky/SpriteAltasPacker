@@ -1,0 +1,3 @@
+[submodule "SpriteAltasPacker/rpb"]
+	path = SpriteAltasPacker/rpb
+	url = https://github.com/juj/RectangleBinPack.git
