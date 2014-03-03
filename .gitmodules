@@ -4,3 +4,12 @@
 [submodule "SpriteAltasPacker/pvr"]
 	path = SpriteAltasPacker/pvr
 	url = https://github.com/jynnantonix/pvrtex.git
+[submodule "SpriteAltasPacker/3rdparties/pvr"]
+	path = SpriteAltasPacker/3rdparties/pvr
+	url = https://github.com/jynnantonix/pvrtex.git
+[submodule "SpriteAltasPacker/3rdparties/rbp"]
+	path = SpriteAltasPacker/3rdparties/rbp
+	url = https://github.com/juj/RectangleBinPack.git
+[submodule "SpriteAltasPacker/3rdparties/libdds"]
+	path = SpriteAltasPacker/3rdparties/libdds
+	url = https://github.com/bazhenovc/libdds.git

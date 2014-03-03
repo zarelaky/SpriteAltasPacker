@@ -4,8 +4,10 @@
 
 TEMPLATE = app
 TARGET = SpriteAltasPacker
-INCLUDEPATH += .
-QT+=gui widgets xml
+unix:UI_DIR = uic
+win32:UI_DIR = uic
+INCLUDEPATH += . $uic
+QT+=gui xml
 
 RESOURCES += SpriteAltasPacker.qrc
 FORMS=\
@@ -13,7 +15,9 @@ FORMS=\
 	ui/filesview.ui \
 	ui/contentview.ui\
 	ui/propertiesview.ui\
-	ui/about.ui
+	ui/about.ui \
+    ui/renamedialog.ui \
+    ui/logview.ui
 
 
 
@@ -23,7 +27,11 @@ HEADERS += \
 	FilesWidget.h	\
 	PropertiesWidget.h\
 	ContentWidget.h	\
-	AboutWidget.h
+	AboutWidget.h \
+    imagepreviewwidget.h \
+    renamedialog.h \
+    zoomableimagewidget.h \
+    logwidget.h
 
 
 SOURCES += \
@@ -32,7 +40,14 @@ SOURCES += \
 	FilesWidget.cpp \
 	PropertiesWidget.cpp \
 	ContentWidget.cpp	\
-	AboutWidget.cpp
+	AboutWidget.cpp \
+    imagepreviewwidget.cpp \
+    renamedialog.cpp \
+    zoomableimagewidget.cpp \
+    logwidget.cpp
+
+OTHER_FILES += \
+    Readme.txt
 
 
 

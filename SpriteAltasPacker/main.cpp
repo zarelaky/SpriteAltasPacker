@@ -7,12 +7,12 @@
 int main(int argc, char* argv[])
 {
 	QApplication a(argc, argv);
+    Q_INIT_RESOURCE(SpriteAltasPacker);
 
     QPixmap pixmap(":/res/images/splash.png");
     QSplashScreen splash(pixmap);
     splash.show();
     splash.showMessage("Loaded Resource ..");
-    Q_INIT_RESOURCE(SpriteAltasPacker);
 
     a.processEvents();
 
