@@ -1,3 +1,6 @@
 [submodule "SpriteAltasPacker/rpb"]
 	path = SpriteAltasPacker/rpb
 	url = https://github.com/juj/RectangleBinPack.git
+[submodule "SpriteAltasPacker/pvr"]
+	path = SpriteAltasPacker/pvr
+	url = https://github.com/jynnantonix/pvrtex.git
