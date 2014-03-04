@@ -49,6 +49,12 @@ public:
 
 	/// Computes the ratio of used surface area to the total bin area.
 	float Occupancy() const;
+    bool allowRotated() const {
+        return _allowRotated;
+    }
+    void SetAllowRotated(bool allow) {
+        _allowRotated = allow;
+    }
 
 private:
 	int binWidth;
@@ -80,6 +86,7 @@ private:
 
 	/// Goes through the free rectangle list and removes any redundant entries.
 	void PruneFreeList();
+    bool _allowRotated;
 };
 
 }

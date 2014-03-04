@@ -20,12 +20,14 @@ namespace rbp {
 using namespace std;
 
 MaxRectsBinPack::MaxRectsBinPack()
-:binWidth(0),
-binHeight(0)
+: binWidth(0)
+, binHeight(0)
+, _allowRotated(false)
 {
 }
 
 MaxRectsBinPack::MaxRectsBinPack(int width, int height)
+    : _allowRotated(false)
 {
 	Init(width, height);
 }
@@ -193,19 +195,21 @@ Rect MaxRectsBinPack::FindPositionForNewNodeBottomLeft(int width, int height, in
 				bestX = freeRectangles[i].x;
 			}
 		}
-		if (freeRectangles[i].width >= height && freeRectangles[i].height >= width)
-		{
-			int topSideY = freeRectangles[i].y + width;
-			if (topSideY < bestY || (topSideY == bestY && freeRectangles[i].x < bestX))
-			{
-				bestNode.x = freeRectangles[i].x;
-				bestNode.y = freeRectangles[i].y;
-				bestNode.width = height;
-				bestNode.height = width;
-				bestY = topSideY;
-				bestX = freeRectangles[i].x;
-			}
-		}
+        if (allowRotated()) {
+            if (freeRectangles[i].width >= height && freeRectangles[i].height >= width)
+            {
+                int topSideY = freeRectangles[i].y + width;
+                if (topSideY < bestY || (topSideY == bestY && freeRectangles[i].x < bestX))
+                {
+                    bestNode.x = freeRectangles[i].x;
+                    bestNode.y = freeRectangles[i].y;
+                    bestNode.width = height;
+                    bestNode.height = width;
+                    bestY = topSideY;
+                    bestX = freeRectangles[i].x;
+                }
+            }
+        }
 	}
 	return bestNode;
 }
@@ -238,24 +242,25 @@ Rect MaxRectsBinPack::FindPositionForNewNodeBestShortSideFit(int width, int heig
 				bestLongSideFit = longSideFit;
 			}
 		}
+        if (allowRotated()) {
+            if (freeRectangles[i].width >= height && freeRectangles[i].height >= width)
+            {
+                int flippedLeftoverHoriz = abs(freeRectangles[i].width - height);
+                int flippedLeftoverVert = abs(freeRectangles[i].height - width);
+                int flippedShortSideFit = min(flippedLeftoverHoriz, flippedLeftoverVert);
+                int flippedLongSideFit = max(flippedLeftoverHoriz, flippedLeftoverVert);
 
-		if (freeRectangles[i].width >= height && freeRectangles[i].height >= width)
-		{
-			int flippedLeftoverHoriz = abs(freeRectangles[i].width - height);
-			int flippedLeftoverVert = abs(freeRectangles[i].height - width);
-			int flippedShortSideFit = min(flippedLeftoverHoriz, flippedLeftoverVert);
-			int flippedLongSideFit = max(flippedLeftoverHoriz, flippedLeftoverVert);
-
-			if (flippedShortSideFit < bestShortSideFit || (flippedShortSideFit == bestShortSideFit && flippedLongSideFit < bestLongSideFit))
-			{
-				bestNode.x = freeRectangles[i].x;
-				bestNode.y = freeRectangles[i].y;
-				bestNode.width = height;
-				bestNode.height = width;
-				bestShortSideFit = flippedShortSideFit;
-				bestLongSideFit = flippedLongSideFit;
-			}
-		}
+                if (flippedShortSideFit < bestShortSideFit || (flippedShortSideFit == bestShortSideFit && flippedLongSideFit < bestLongSideFit))
+                {
+                    bestNode.x = freeRectangles[i].x;
+                    bestNode.y = freeRectangles[i].y;
+                    bestNode.width = height;
+                    bestNode.height = width;
+                    bestShortSideFit = flippedShortSideFit;
+                    bestLongSideFit = flippedLongSideFit;
+                }
+            }
+        }
 	}
 	return bestNode;
 }
@@ -289,23 +294,25 @@ Rect MaxRectsBinPack::FindPositionForNewNodeBestLongSideFit(int width, int heigh
 			}
 		}
 
-		if (freeRectangles[i].width >= height && freeRectangles[i].height >= width)
-		{
-			int leftoverHoriz = abs(freeRectangles[i].width - height);
-			int leftoverVert = abs(freeRectangles[i].height - width);
-			int shortSideFit = min(leftoverHoriz, leftoverVert);
-			int longSideFit = max(leftoverHoriz, leftoverVert);
+        if (allowRotated()) {
+            if (freeRectangles[i].width >= height && freeRectangles[i].height >= width)
+            {
+                int leftoverHoriz = abs(freeRectangles[i].width - height);
+                int leftoverVert = abs(freeRectangles[i].height - width);
+                int shortSideFit = min(leftoverHoriz, leftoverVert);
+                int longSideFit = max(leftoverHoriz, leftoverVert);
 
-			if (longSideFit < bestLongSideFit || (longSideFit == bestLongSideFit && shortSideFit < bestShortSideFit))
-			{
-				bestNode.x = freeRectangles[i].x;
-				bestNode.y = freeRectangles[i].y;
-				bestNode.width = height;
-				bestNode.height = width;
-				bestShortSideFit = shortSideFit;
-				bestLongSideFit = longSideFit;
-			}
-		}
+                if (longSideFit < bestLongSideFit || (longSideFit == bestLongSideFit && shortSideFit < bestShortSideFit))
+                {
+                    bestNode.x = freeRectangles[i].x;
+                    bestNode.y = freeRectangles[i].y;
+                    bestNode.width = height;
+                    bestNode.height = width;
+                    bestShortSideFit = shortSideFit;
+                    bestLongSideFit = longSideFit;
+                }
+            }
+        }
 	}
 	return bestNode;
 }
@@ -339,23 +346,24 @@ Rect MaxRectsBinPack::FindPositionForNewNodeBestAreaFit(int width, int height,
 				bestAreaFit = areaFit;
 			}
 		}
+        if (allowRotated()) {
+            if (freeRectangles[i].width >= height && freeRectangles[i].height >= width)
+            {
+                int leftoverHoriz = abs(freeRectangles[i].width - height);
+                int leftoverVert = abs(freeRectangles[i].height - width);
+                int shortSideFit = min(leftoverHoriz, leftoverVert);
 
-		if (freeRectangles[i].width >= height && freeRectangles[i].height >= width)
-		{
-			int leftoverHoriz = abs(freeRectangles[i].width - height);
-			int leftoverVert = abs(freeRectangles[i].height - width);
-			int shortSideFit = min(leftoverHoriz, leftoverVert);
-
-			if (areaFit < bestAreaFit || (areaFit == bestAreaFit && shortSideFit < bestShortSideFit))
-			{
-				bestNode.x = freeRectangles[i].x;
-				bestNode.y = freeRectangles[i].y;
-				bestNode.width = height;
-				bestNode.height = width;
-				bestShortSideFit = shortSideFit;
-				bestAreaFit = areaFit;
-			}
-		}
+                if (areaFit < bestAreaFit || (areaFit == bestAreaFit && shortSideFit < bestShortSideFit))
+                {
+                    bestNode.x = freeRectangles[i].x;
+                    bestNode.y = freeRectangles[i].y;
+                    bestNode.width = height;
+                    bestNode.height = width;
+                    bestShortSideFit = shortSideFit;
+                    bestAreaFit = areaFit;
+                }
+            }
+        }
 	}
 	return bestNode;
 }
@@ -409,18 +417,20 @@ Rect MaxRectsBinPack::FindPositionForNewNodeContactPoint(int width, int height, 
 				bestContactScore = score;
 			}
 		}
-		if (freeRectangles[i].width >= height && freeRectangles[i].height >= width)
-		{
-			int score = ContactPointScoreNode(freeRectangles[i].x, freeRectangles[i].y, height, width);
-			if (score > bestContactScore)
-			{
-				bestNode.x = freeRectangles[i].x;
-				bestNode.y = freeRectangles[i].y;
-				bestNode.width = height;
-				bestNode.height = width;
-				bestContactScore = score;
-			}
-		}
+        if (allowRotated()) {
+            if (freeRectangles[i].width >= height && freeRectangles[i].height >= width)
+            {
+                int score = ContactPointScoreNode(freeRectangles[i].x, freeRectangles[i].y, height, width);
+                if (score > bestContactScore)
+                {
+                    bestNode.x = freeRectangles[i].x;
+                    bestNode.y = freeRectangles[i].y;
+                    bestNode.width = height;
+                    bestNode.height = width;
+                    bestContactScore = score;
+                }
+            }
+        }
 	}
 	return bestNode;
 }
