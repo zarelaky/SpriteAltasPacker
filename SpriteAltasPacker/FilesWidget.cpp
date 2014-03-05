@@ -18,8 +18,9 @@ const char* supports[] = {
     NULL
 };
 
-FilesWidget::FilesWidget(QWidget* p)
+FilesWidget::FilesWidget(QWidget* p, ImageListModel& ilm)
 	: QDockWidget(p)
+    , _ilm(ilm)
 {
     _ui = new Ui::FilesDockWidget();
 	_ui->setupUi(this);
@@ -56,7 +57,9 @@ void FilesWidget::dropEvent(QDropEvent* evt)
         foreach(QUrl url, evt->mimeData()->urls()) {
             if (url.isLocalFile()){
                // QMessageBox::information(NULL, "info", url.toLocalFile());
+                _ilm.beginEdit();
                 addToTree(url.toLocalFile());
+                _ilm.endEdit();
             }
         }
     }
@@ -142,12 +145,16 @@ void FilesWidget::addFile(const QFileInfo& fi, QTreeWidgetItem* p)
     item->setText(level, fi.fileName());
     item->setData(0, Qt::UserRole, 1);
     item->setData(1, Qt::DisplayRole, fi.absoluteFilePath());
+    _ilm.Add(fi.absoluteFilePath());
+
 }
 
 void FilesWidget::onAddFile() {
     QString s = QFileDialog::getOpenFileName(this, tr(""), "", "Images (*.jpg *.png *.bmp)");
     if (!s.isEmpty()) {
+        _ilm.beginEdit();
         addFile(QFileInfo(s));
+        _ilm.endEdit();
     }
 
 }
@@ -156,7 +163,16 @@ void FilesWidget::onAddFolder()
 {
     QString s = QFileDialog::getExistingDirectory(this, tr(""));
     if (!s.isEmpty()) {
+        _ilm.beginEdit();
         addFolder(QFileInfo(s));
+        _ilm.endEdit();
+    }
+}
+
+void FilesWidget::removeFileInList(QTreeWidgetItem* d)
+{
+    if (d->data(0, Qt::UserRole).toInt() == 1) {
+        _ilm.Remove(d->data(1, Qt::DisplayRole).toString());
     }
 }
 
@@ -165,22 +181,28 @@ void FilesWidget::onDeleteFile()
     QTreeWidget* tw = _ui->treeWidget;
     QTreeWidgetItem* ti = tw->currentItem();
     if (ti) {
+        _ilm.beginEdit();
+        QList<QTreeWidgetItem*> children = ti->takeChildren();
+        QListIterator<QTreeWidgetItem*> i(children);
+        while (i.hasNext()) {
+            QTreeWidgetItem* d = i.next();
+            removeFileInList(d);
+            delete d;
+        }
+
         if (ti->parent()) {
-            QList<QTreeWidgetItem*> children = ti->takeChildren();
-            QListIterator<QTreeWidgetItem*> i(children);
-            while (i.hasNext()) {
-                delete i.next();
-            }
             ti->parent()->removeChild(ti);
         } else {
             tw->takeTopLevelItem(tw->indexOfTopLevelItem(ti));
-
         }
+        removeFileInList(ti);
         delete ti;
+        _ilm.endEdit();
     }
 }
 void FilesWidget::onRename()
 {
+
     QTreeWidget* tw = _ui->treeWidget;
     QTreeWidgetItem* i = tw->currentItem();
     if (i) {
@@ -199,7 +221,6 @@ void FilesWidget::contextMenuEvent(QContextMenuEvent * evt)
 {
     QTreeWidgetItem* item = _ui->treeWidget->itemAt(_ui->treeWidget->viewport()->mapFromGlobal(evt->globalPos()));
     if (item){
-
         treeContextMenu->popup(evt->globalPos());
     }
 }

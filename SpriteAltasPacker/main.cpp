@@ -3,10 +3,12 @@
 #include <QSplashScreen>
 #include "mainwindow.h"
 #include <QThread>
+#include "trimmedimageinfo.h"
 
 int main(int argc, char* argv[])
 {
 	QApplication a(argc, argv);
+
     Q_INIT_RESOURCE(SpriteAltasPacker);
 
     QPixmap pixmap(":/res/images/splash.png");

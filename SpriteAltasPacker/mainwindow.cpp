@@ -16,12 +16,13 @@ MainWindow::MainWindow()
 
     QWidget* p = _ui->centralwidget;
 
-    _ui->scrollAreaWidgetContents->setFixedSize(1024, 1024);
+    _ui->scrollAreaWidgetContents->SetImageListModel(&_ilm);
     connect(_ui->menubar, SIGNAL(triggered(QAction*)), SLOT(menuActionTriggered(QAction*)));
 
-    propertiesWidget    = new PropertiesWidget(p);
-    filesWidget         = new FilesWidget(p);
+    propertiesWidget    = new PropertiesWidget(p,&_ilm);
+    filesWidget         = new FilesWidget(p, _ilm);
     imgPreviewWidget    = new ImagePreviewWidget();
+
 
     addDockWidget(Qt::LeftDockWidgetArea, propertiesWidget);
     propertiesWidget->setAllowedAreas(Qt::LeftDockWidgetArea|Qt::RightDockWidgetArea);
@@ -34,7 +35,12 @@ MainWindow::MainWindow()
     addDockWidget(Qt::BottomDockWidgetArea, logWidget);
 
     connect(filesWidget, SIGNAL(selectImageChanged(const QString)), imgPreviewWidget, SLOT(setImage(const QString)));
+    connect(&_ilm, SIGNAL(imageListChanged()), _ui->scrollAreaWidgetContents, SLOT(imageListChanged()));
+    connect(&_ilm, SIGNAL(canvasSizeChanged(const QSize&)), _ui->scrollAreaWidgetContents, SLOT(setCanvasSize(const QSize&)));
 
+
+    _ilm.setCanvasHeight(1024);
+    _ilm.setCanvasWidth(1024);
 }
 
 MainWindow::~MainWindow()
@@ -63,3 +69,4 @@ void MainWindow::menuActionTriggered(QAction* act)
     }
 
 }
+

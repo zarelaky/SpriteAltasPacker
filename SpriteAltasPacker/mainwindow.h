@@ -1,5 +1,7 @@
 #pragma once
 #include <QMainWindow>
+#include <imagelistmodel.h>
+
 namespace Ui
 {
     class MainWindow;
@@ -26,5 +28,6 @@ private:
     FilesWidget*        filesWidget;
     ImagePreviewWidget* imgPreviewWidget;
     LogWidget*          logWidget;
+    ImageListModel      _ilm;
 
 };

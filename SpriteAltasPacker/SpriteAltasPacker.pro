@@ -16,8 +16,8 @@ FORMS=\
 	ui/contentview.ui\
 	ui/propertiesview.ui\
 	ui/about.ui \
-    ui/renamedialog.ui \
-    ui/logview.ui
+        ui/renamedialog.ui \
+        ui/logview.ui
 
 
 
@@ -28,10 +28,15 @@ HEADERS += \
 	PropertiesWidget.h\
 	ContentWidget.h	\
 	AboutWidget.h \
-    imagepreviewwidget.h \
-    renamedialog.h \
-    zoomableimagewidget.h \
-    logwidget.h
+        imagepreviewwidget.h \
+        renamedialog.h \
+        zoomableimagewidget.h \
+        logwidget.h \
+        lib/rbp/MaxRectsBinPack.h \
+        lib/rbp/Rect.h \
+        imagelistmodel.h \
+        rectpacker.h \
+    trimmedimageinfo.h
 
 
 SOURCES += \
@@ -41,10 +46,17 @@ SOURCES += \
 	PropertiesWidget.cpp \
 	ContentWidget.cpp	\
 	AboutWidget.cpp \
-    imagepreviewwidget.cpp \
-    renamedialog.cpp \
-    zoomableimagewidget.cpp \
-    logwidget.cpp
+        imagepreviewwidget.cpp \
+        renamedialog.cpp \
+        zoomableimagewidget.cpp \
+        logwidget.cpp \
+        lib/rbp/MaxRectsBinPack.cpp \
+        lib/rbp/Rect.cpp \
+        imagelistmodel.cpp \
+        rectpacker.cpp \
+    trimmedimageinfo.cpp
+
+
 
 OTHER_FILES += \
     Readme.txt
